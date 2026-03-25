@@ -1,0 +1,81 @@
+---
+import Nav from "../components/Nav.astro";
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout>
+  <main class="">
+    <div class="container">
+      <h1 class="error-code">404</h1>
+
+      <h2 class="error-message">Página no encontrada</h2>
+
+      <p class="error-description">
+        La página que estás buscando no existe o ha sido movida. Puedes volver
+        al inicio para continuar navegando.
+      </p>
+
+      <button class="button">
+        <a href="/" class="">Volver al inicio</a>
+      </button>
+    </div>
+  </main>
+</Layout>
+
+<style>
+ 
+  .container {
+    margin-top: 96px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    max-width: 600px;
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .error-code {
+    font-size: 10rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    letter-spacing: -0.5rem;
+    line-height: 1;
+  }
+
+  .error-message {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+  }
+
+  .error-description {
+    font-size: 1.2rem;
+    max-width: 500px;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+    opacity: 0.8;
+  }
+
+  button{
+    padding: 12px 24px;
+  }
+
+  .back-button:hover {
+    background-color: var(--orange);
+  }
+
+  @media (max-width: 600px) {
+    .error-code {
+      font-size: 6rem;
+    }
+
+    .error-message {
+      font-size: 1.4rem;
+    }
+
+    .error-description {
+      font-size: 1rem;
+    }
+  }
+</style>

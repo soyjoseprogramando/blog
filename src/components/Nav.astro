@@ -1,0 +1,250 @@
+---
+import { Logs, SquareTerminal, Server, X } from "@lucide/astro";
+
+const navItems = [
+  { path: "/", label: "blog" },
+  { path: "/about", label: "about" },
+];
+---
+
+<nav>
+  <div class="nav nav--always-visible">
+    <SquareTerminal color="#ff6b35" />
+    <a href="/" class="nav__username">~/joseprogramando</a>
+    <div id="menu" class="menu-icon">
+      <Logs id="logs-icon" />
+      <X id="close-menu" color="#ff6b35" stroke-width={3} class="hidden" />
+    </div>
+  </div>
+
+  <div id="mobile-menu" class="mobile-menu">
+    <div class="mobile-menu__nav">
+      {
+        navItems.map((item, idx) => (
+          <a href={item.path} class="mobile-menu__link">
+            <p class="mobile-menu__idx">[{idx + 1}]</p>
+            <p class="mobile-menu__label">
+              <span>/</span>
+              {item.label}
+            </p>
+          </a>
+        ))
+      }
+    </div>
+
+    <hr />
+    <div class="system">
+      <div class="system__title">
+        <Server color="#ff6b35" size={16} />
+        <p>SYSTEM STATUS</p>
+      </div>
+      <div class="system__info">
+        <p class="system__user">josepro@menu:~$ <span>uptime</span></p>
+        <p class="system__uptime">24 days, 6:42</p>
+      </div>
+      <div class="social-media">
+        <p>[github]</p>
+        <p>[twitter]</p>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<script>
+  const $menuIcon = document.getElementById("menu"),
+    $mobileMenu = document.getElementById("mobile-menu"),
+    $logsIcon = document.getElementById("logs-icon"),
+    $closeIcon = document.getElementById("close-menu");
+
+  $menuIcon?.addEventListener("click", () => {
+    const isOpen = $mobileMenu?.classList.contains("show");
+
+    if (isOpen) {
+      $mobileMenu?.classList.remove("show");
+      $mobileMenu?.classList.add("hide");
+
+      $logsIcon?.classList.remove("hidden");
+      $closeIcon?.classList.add("hidden");
+
+      setTimeout(() => {
+        $mobileMenu?.classList.remove("hide");
+      }, 300);
+    } else {
+      $mobileMenu?.classList.remove("hide");
+      $mobileMenu?.classList.add("show");
+
+      $logsIcon?.classList.add("hidden");
+      $closeIcon?.classList.remove("hidden");
+    }
+  });
+</script>
+
+<style>
+  nav {
+    height: 4rem;
+  }
+  .nav {
+    background-color: var(--background-dark);
+    position: fixed;
+    top: 0; /* Fijo arriba */
+    left: 0; /* Desde el borde izquierdo */
+    right: 0; /* Hasta el borde derecho */
+    width: 100%; /* Ocupa todo el ancho */
+    height: 4rem;
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid #333333;
+    z-index: 999;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .nav__container {
+    width: 16px;
+    height: 16px;
+  }
+
+  .nav__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .nav__username {
+    color: inherit;
+    text-decoration: none;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+  }
+
+  .nav__username:hover {
+    opacity: 0.8;
+  }
+
+  .mobile-menu {
+    position: fixed;
+    top: 4rem;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--background-dark);
+    border-bottom: 1px solid #333333;
+    z-index: 998;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    opacity: 0;
+    pointer-events: none;
+    transition:
+      opacity 0.3s ease-out,
+      transform 0.3s ease-out;
+    transform: translateY(-10px);
+  }
+
+  .mobile-menu.show {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .mobile-menu.hide {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-10px);
+  }
+
+  .mobile-menu.hidden {
+    display: none;
+  }
+
+  .mobile-menu__header {
+    padding: 1rem;
+  }
+
+  .mobile-menu__nav {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mobile-menu__link {
+    color: inherit;
+    text-decoration: none;
+    padding: 0.5rem;
+    font-weight: bold;
+    display: flex;
+    gap: 12px;
+  }
+
+  .mobile-menu__link:hover {
+    opacity: 0.8;
+  }
+  .mobile-menu__idx {
+    color: var(--orange);
+    font-size: 0.875rem;
+    opacity: 0.5;
+  }
+  .mobile-menu__label {
+    display: flex;
+    gap: 1px;
+  }
+  .mobile-menu__label span {
+    color: var(--orange);
+  }
+
+  .system {
+  }
+  .system__title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .system__title p {
+    font-weight: bold;
+    font-size: 0.875rem;
+  }
+  .system__info {
+    margin-top: 8px;
+    margin-left: 24px;
+  }
+  .system__user {
+    font-size: 0.875rem;
+    color: var(--orange);
+  }
+  .system__user span {
+    color: var(--text-white);
+  }
+  .system__uptime {
+    font-size: 0.875rem;
+    color: var(--text-grey);
+  }
+  .social-media {
+    margin-top: 16px;
+    margin-left: 24px;
+    display: flex;
+    gap: 16px;
+  }
+  .social-media p {
+    font-size: 0.875rem;
+    color: var(--text-grey);
+  }
+  .cursor {
+    width: 8px;
+    height: 24px;
+    background-color: var(--orange);
+    margin-left: 4px;
+    animation: blink 3s step-start infinite;
+    opacity: 0.7;
+    margin-right: 4px;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  #logs-icon,
+  #close-menu {
+    transition: opacity 0.3s ease-out;
+  }
+</style>

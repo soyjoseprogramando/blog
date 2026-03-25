@@ -1,0 +1,21 @@
+{
+  "name": "my-web",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^4.0.0",
+    "@astrojs/sitemap": "^3.6.0",
+    "@lucide/astro": "^0.523.0",
+    "astro": "^5.7.4",
+    "astro-expressive-code": "^0.41.3"
+  },
+  "devDependencies": {
+    "wrangler": "^4.25.0"
+  }
+}

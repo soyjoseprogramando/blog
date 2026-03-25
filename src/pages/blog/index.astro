@@ -1,0 +1,37 @@
+---
+import Nav from "@components/Nav.astro";
+import { ArrowLeft } from "@lucide/astro";
+import Post from "@components/Post.astro";
+import Layout from "@layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+const posts = await getCollection("posts");
+---
+
+<Layout nav={false} customBackground={true} pdBottom={false}>
+  <Nav />
+  <section class="blog">
+    <h1>Blog</h1>
+    <p>
+      Aqui escribo mis pensamientos, reflexiones y experiencias sobre diversos
+      temas.
+    </p>
+    <hr class="" />
+    <div class="posts">
+      {
+        posts.map((post) => (
+          <Post title={post.data.title} link={`/blog/${post.id}`} date="" />
+        ))
+      }
+    </div>
+
+    <div class="blog__button-container">
+      <a href="/" class="blog__back-btn">
+        <ArrowLeft size={16} />
+        Volver a inicio
+      </a>
+    </div>
+  </section>
+</Layout>
+
+<style></style>

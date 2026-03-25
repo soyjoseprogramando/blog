@@ -1,0 +1,89 @@
+---
+import { ArrowRight } from "@lucide/astro";
+export interface Props {
+  title: string;
+  link: string;
+  date: string;
+}
+
+const {
+  title = "Título por defecto",
+  link = "",
+  date = "28 junio 2023",
+} = Astro.props;
+---
+
+<article class="post">
+  <a href={link}>
+    <div class="post__description">
+      <div class="post_texts">
+        <h3 class="title-3">{title}</h3>
+        <div class="details">
+          <p>{date}</p>
+        </div>
+      </div>
+    </div>
+  </a>
+</article>
+
+<style>
+  .details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--text-grey);
+  }
+  .post__link {
+    color: var(--text-white);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .post__link:hover {
+    color: var(--orange);
+  }
+
+  .post_tag {
+    display: inline-block;
+    padding: 2px 6px;
+    margin-right: 4px;
+    border-radius: 20px;
+    color: var(--text-grey);
+    font-size: 0.7rem;
+    font-weight: thinner;
+    background-color: #61dafb20;
+  }
+  .post__sinopsis {
+    color: var(--text-grey);
+    line-height: 1.2;
+  }
+
+  .post__description {
+    padding: 1rem;
+  }
+  .title-3 {
+    font-family: "Inter", sans-serif;
+    font-weight: bold;
+    line-height: normal;
+    text-transform: initial;
+    margin-bottom: 1rem;
+  }
+
+  .post {
+    width: 100%;
+    padding: 0px;
+    text-align: left;
+    transition: all 0.3s ease;
+    border: 1px solid var(--border);
+    transition: all 0.3s ease-out;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #1a1a1a;
+    max-width: 720px;
+  }
+  .post:hover {
+    box-shadow: 0 4px 24px 0 rgba(251, 197, 97, 0.15);
+    border-color: var(--orange);
+    transform: translateY(-2px) scale(1.01);
+  }
+</style>
