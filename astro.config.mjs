@@ -6,7 +6,7 @@ import expressiveCode from 'astro-expressive-code';
 
 export default defineConfig({
   site: 'https://soyjoseprogramando.github.io',
-  base: '/blog',
+  base: '/',
   integrations: [
     sitemap(),
     expressiveCode({

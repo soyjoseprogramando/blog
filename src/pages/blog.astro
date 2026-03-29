@@ -1,0 +1,144 @@
+---
+import { ChevronRight, ChevronsRight, RectangleVertical } from "@lucide/astro";
+import { getCollection } from "astro:content";
+import Layout from "../layouts/Layout.astro";
+
+const posts = await getCollection("posts");
+console.log(posts);
+---
+
+<Layout>
+  <div class="container">
+    <main class="">
+      <section class="josepro">
+        <h1>josepro@dev:~/blog</h1>
+        <div class="josepro__system">
+          <ChevronsRight class="chevrons-right" size={16} color="#10b981" />
+          <p>
+            system uptime: <span class="josepro__span">99,9%</span> | displaying recent
+            posts
+          </p>
+        </div>
+        <hr />
+      </section>
+      <section class="search">
+        <div class="search__box">
+          <ChevronRight color="#ff6b35" />
+          <input class="search__input" type="text" placeholder="️search..." />
+          <div class="cursor"></div>
+        </div>
+      </section>
+      <section class="posts">
+        {
+          posts.map((post) => (
+            <article class="post">
+              <div class="post__info">
+                <p>[{post.data.date}]</p>
+                <p>::</p>
+                <p class="post__tag">{post.data.tags[0]}</p>
+              </div>
+              <h2>{post.data.title}</h2>
+            </article>
+          ))
+        }
+      </section>
+    </main>
+    <h2>Cómo crear un servidor SSH en tu máquina local</h2>
+  </div>
+</Layout>
+<!-- <h1>SSH con tu</h1> -->
+
+<style>
+  .josepro {
+    margin-top: 2rem;
+  }
+  .josepro__system {
+    height: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .josepro__system p {
+    margin-left: 8px;
+    font-size: 0.875rem;
+    color: var(--text-grey-dark);
+  }
+  .josepro__span {
+    color: var(--orange);
+  }
+  .chevrons-right {
+    align-self: flex-start;
+    margin-top: 12px;
+  }
+  .search__box {
+    height: 48px;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .search__input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    padding: 0 8px;
+    color: inherit;
+    font-family: inherit;
+    font-size: 1rem;
+  }
+  .cursor {
+    width: 8px;
+    height: 24px;
+    background-color: var(--orange);
+    margin-left: 4px;
+    animation: blink 3s step-start infinite;
+    opacity: 0.7;
+    margin-right: 4px;
+  }
+
+  .posts {
+    margin-top: 1rem;
+  }
+
+  .post {
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+  }
+
+  .post:hover {
+    background-color: #333333;
+    border: 1px solid var(--border);
+  }
+
+  .post__info {
+    display: flex;
+    align-items: start;
+    gap: 8px;
+    color: var(--text-grey-dark);
+  }
+  .post__info p {
+    font-size: 0.875rem;
+  }
+
+  .post__tag {
+    background-color: var(--bg-dark-light);
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: var(--orange);
+  }
+
+  @keyframes blink {
+    0% {
+      opacity: 0.5;
+    }
+    49% {
+      opacity: 0.7;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+</style>
