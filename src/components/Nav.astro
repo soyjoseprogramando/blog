@@ -2,26 +2,71 @@
 import { Logs, SquareTerminal, Server, X } from "@lucide/astro";
 
 const navItems = [
-  { path: "/", label: "blog" },
+  { path: "/blog", label: "blog" },
   { path: "/about", label: "about" },
 ];
+
+const currentPath = Astro.url.pathname;
+const isItemActive = (itemPath: string) => {
+  if (itemPath === "/blog") {
+    return (
+      currentPath === "/" ||
+      currentPath === "/blog" ||
+      currentPath.startsWith("/blog/")
+    );
+  }
+
+  return currentPath === itemPath || currentPath.startsWith(`${itemPath}/`);
+};
 ---
 
 <nav>
-  <div class="nav nav--always-visible">
-    <SquareTerminal color="#ff6b35" />
-    <a href="/" class="nav__username">~/joseprogramando</a>
-    <div id="menu" class="menu-icon">
+  <div class="nav">
+    <div class="nav__brand">
+      <SquareTerminal color="#ff6b35" />
+      <a href="/" class="nav__username">~/joseprogramando</a>
+    </div>
+
+    <div class="desktop-menu" aria-label="Desktop navigation">
+      {
+        navItems.map((item, idx) => (
+          <a
+            href={item.path}
+            class={`desktop-menu__link ${isItemActive(item.path) ? "desktop-menu__link--active" : ""}`}
+            aria-current={isItemActive(item.path) ? "page" : undefined}
+          >
+            <p class="desktop-menu__idx">[ {idx + 1} ]</p>
+            <p class="desktop-menu__label">
+              <span>/</span>
+              {item.label}
+            </p>
+          </a>
+        ))
+      }
+    </div>
+
+    <button
+      id="menu"
+      class="nav__menu-btn"
+      type="button"
+      aria-label="Open navigation menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
       <Logs id="logs-icon" />
       <X id="close-menu" color="#ff6b35" stroke-width={3} class="hidden" />
-    </div>
+    </button>
   </div>
 
   <div id="mobile-menu" class="mobile-menu">
     <div class="mobile-menu__nav">
       {
         navItems.map((item, idx) => (
-          <a href={item.path} class="mobile-menu__link">
+          <a
+            href={item.path}
+            class={`mobile-menu__link ${isItemActive(item.path) ? "mobile-menu__link--active" : ""}`}
+            aria-current={isItemActive(item.path) ? "page" : undefined}
+          >
             <p class="mobile-menu__idx">[{idx + 1}]</p>
             <p class="mobile-menu__label">
               <span>/</span>
@@ -56,7 +101,28 @@ const navItems = [
     $logsIcon = document.getElementById("logs-icon"),
     $closeIcon = document.getElementById("close-menu");
 
+  const desktopMedia = window.matchMedia("(min-width: 768px)");
+
+  const closeMobileMenu = () => {
+    $mobileMenu?.classList.remove("show", "hide");
+    $logsIcon?.classList.remove("hidden");
+    $closeIcon?.classList.add("hidden");
+    $menuIcon?.setAttribute("aria-expanded", "false");
+    $menuIcon?.setAttribute("aria-label", "Open navigation menu");
+  };
+
+  const syncMenuByViewport = () => {
+    if (desktopMedia.matches) {
+      closeMobileMenu();
+    }
+  };
+
+  syncMenuByViewport();
+  desktopMedia.addEventListener("change", syncMenuByViewport);
+
   $menuIcon?.addEventListener("click", () => {
+    if (desktopMedia.matches) return;
+
     const isOpen = $mobileMenu?.classList.contains("show");
 
     if (isOpen) {
@@ -65,6 +131,8 @@ const navItems = [
 
       $logsIcon?.classList.remove("hidden");
       $closeIcon?.classList.add("hidden");
+      $menuIcon?.setAttribute("aria-expanded", "false");
+      $menuIcon?.setAttribute("aria-label", "Open navigation menu");
 
       setTimeout(() => {
         $mobileMenu?.classList.remove("hide");
@@ -75,6 +143,8 @@ const navItems = [
 
       $logsIcon?.classList.add("hidden");
       $closeIcon?.classList.remove("hidden");
+      $menuIcon?.setAttribute("aria-expanded", "true");
+      $menuIcon?.setAttribute("aria-label", "Close navigation menu");
     }
   });
 </script>
@@ -100,15 +170,10 @@ const navItems = [
     align-items: center;
   }
 
-  .nav__container {
-    width: 16px;
-    height: 16px;
-  }
-
-  .nav__img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  .nav__brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
   }
 
   .nav__username {
@@ -121,6 +186,60 @@ const navItems = [
 
   .nav__username:hover {
     opacity: 0.8;
+  }
+
+  .desktop-menu {
+    display: none;
+  }
+
+  .desktop-menu__link {
+    color: inherit;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.9rem;
+    padding: 0.35rem 0.65rem;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition:
+      color 0.2s ease,
+      background-color 0.2s ease;
+  }
+
+  .desktop-menu__idx {
+    color: var(--orange);
+    font-size: 0.875rem;
+    opacity: 0.5;
+  }
+
+  .desktop-menu__link--active .desktop-menu__idx {
+    opacity: 1;
+  }
+
+  .desktop-menu__label {
+    display: flex;
+    gap: 1px;
+    color: var(--text-grey);
+  }
+
+  .desktop-menu__label span {
+    color: var(--orange);
+  }
+
+  .desktop-menu__link:hover,
+  .desktop-menu__link:focus-visible {
+    background-color: var(--bg-dark-light);
+    outline: none;
+  }
+
+  .desktop-menu__link:hover .desktop-menu__label,
+  .desktop-menu__link:focus-visible .desktop-menu__label {
+    color: var(--text-white);
+  }
+
+  .desktop-menu__link--active .desktop-menu__label {
+    color: var(--orange);
   }
 
   .mobile-menu {
@@ -155,14 +274,6 @@ const navItems = [
     transform: translateY(-10px);
   }
 
-  .mobile-menu.hidden {
-    display: none;
-  }
-
-  .mobile-menu__header {
-    padding: 1rem;
-  }
-
   .mobile-menu__nav {
     display: flex;
     flex-direction: column;
@@ -180,6 +291,19 @@ const navItems = [
   .mobile-menu__link:hover {
     opacity: 0.8;
   }
+
+  .mobile-menu__link--active .mobile-menu__label {
+    color: var(--orange);
+  }
+  .mobile-menu__link--active .mobile-menu__idx {
+    opacity: 1;
+  }
+
+  .mobile-menu__link:focus-visible {
+    outline: 1px solid var(--orange);
+    border-radius: 6px;
+    outline-offset: 2px;
+  }
   .mobile-menu__idx {
     color: var(--orange);
     font-size: 0.875rem;
@@ -193,8 +317,6 @@ const navItems = [
     color: var(--orange);
   }
 
-  .system {
-  }
   .system__title {
     display: flex;
     align-items: center;
@@ -229,22 +351,46 @@ const navItems = [
     font-size: 0.875rem;
     color: var(--text-grey);
   }
-  .cursor {
-    width: 8px;
-    height: 24px;
-    background-color: var(--orange);
-    margin-left: 4px;
-    animation: blink 3s step-start infinite;
-    opacity: 0.7;
-    margin-right: 4px;
-  }
-
   .hidden {
     display: none;
+  }
+
+  .nav__menu-btn {
+    border: none;
+    background: transparent;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0.35rem;
+    border-radius: 6px;
+  }
+
+  .nav__menu-btn:focus-visible {
+    outline: 1px solid var(--orange);
+    outline-offset: 2px;
   }
 
   #logs-icon,
   #close-menu {
     transition: opacity 0.3s ease-out;
+  }
+
+  @media screen and (min-width: 768px) {
+    .desktop-menu {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-left: auto;
+    }
+
+    .nav__menu-btn {
+      display: none;
+    }
+
+    .system {
+      display: none;
+    }
   }
 </style>
