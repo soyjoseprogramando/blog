@@ -151,22 +151,24 @@ const isItemActive = (itemPath: string) => {
 
 <style>
   nav {
-    height: 4rem;
-  }
-  .nav {
-    background-color: var(--background-dark);
     position: fixed;
-    top: 0; /* Fijo arriba */
-    left: 0; /* Desde el borde izquierdo */
-    right: 0; /* Hasta el borde derecho */
-    width: 100%; /* Ocupa todo el ancho */
     height: 4rem;
-    padding: 0.5rem 1rem;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    background-color: var(--background-dark);
     border-bottom: 1px solid #333333;
     z-index: 999;
+  }
+  .nav {
+    height: 100%;
+    width: 90%;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0.5rem 1rem;
     display: flex;
     justify-content: space-between;
-    gap: 1rem;
     align-items: center;
   }
 
