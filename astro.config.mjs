@@ -5,8 +5,7 @@ import sitemap from '@astrojs/sitemap';
 import expressiveCode from 'astro-expressive-code';
 
 export default defineConfig({
-  site: 'https://soyjoseprogramando.github.io',
-  base: '/',
+  site: 'https://joseprogramando.com',
   integrations: [
     sitemap(),
     expressiveCode({
