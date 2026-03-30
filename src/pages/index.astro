@@ -1,3 +1,11 @@
----
-return Astro.redirect("/blog", 302);
----
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content="0; url=/blog" />
+    <script>
+      window.location.replace("/blog");
+    </script>
+    <title>Redirigiendo...</title>
+  </head>
+  <body> <noscript> <a href="/blog">Ir al blog</a> </noscript> </body>
+</html>
