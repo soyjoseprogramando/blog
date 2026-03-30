@@ -1,85 +1,78 @@
 ---
 const isProd = import.meta.env.PROD;
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  type?: "website" | "article";
+}
+
+const SITE_URL = "https://joseprogramando.com";
+const SITE_NAME = "Jose Programando";
+const DEFAULT_DESCRIPTION = "Blog sobre Linux y desarrollo web por Jose.";
+const DEFAULT_IMAGE = `${SITE_URL}/og-default.jpg`;
+
+const {
+  title,
+  description = DEFAULT_DESCRIPTION,
+  image = DEFAULT_IMAGE,
+  type = "website",
+} = Astro.props;
+
+const fullTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME;
+const canonicalURL = new URL(Astro.url.pathname, SITE_URL);
 ---
 
 <head>
-
-  <!-- Google tag (gtag.js) -->
-   {
-    isProd &&(
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVHPS5WXQP"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-    
-      gtag('config', 'G-ZVHPS5WXQP');
-    </script>
-
-    )
-   }
-
+  <!-- Esenciales -->
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width" />
-  <link rel="icon" type="image/svg+xml" href="/images/logo.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="generator" content={Astro.generator} />
-	
+  <link rel="icon" type="image/png" href="/images/logo.png" />
+  <link rel="canonical" href={canonicalURL} />
+  
+  <!-- Primary Meta Tags -->
+  <title>{fullTitle}</title>
+  <meta name="title" content={fullTitle} />
+  <meta name="description" content={description} />
+
+  <!-- Open Graph (Facebook, LinkedIn, WhatsApp) -->
+  <meta property="og:type" content={type} />
+  <meta property="og:url" content={canonicalURL} />
+  <meta property="og:site_name" content={SITE_NAME} />
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={image} />
+  <meta property="og:locale" content="es_CO" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content={canonicalURL} />
+  <meta name="twitter:title" content={fullTitle} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={image} />
+
+  <!-- Fuentes -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
     href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap"
     rel="stylesheet"
   />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-  
-
-
-	<!-- HTML Meta Tags -->
-<title>Joseprogramando</title>
-<meta name="description" content="Portfolio de desarrollador de joseverdev">
-
-<!-- Facebook Meta Tags -->
-<meta property="og:url" content="https://joseverdev.netlify.app/">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Joseverdev Portfolio">
-<meta property="og:description" content="Portfolio de desarrollador de joseverdev">
-<meta property="og:image" content="https://joseverdev.netlify.app/web.jpg">
-
-<!-- Twitter Meta Tags -->
-<meta name="twitter:card" content="summary_large_image">
-<meta property="twitter:domain" content="joseverdev.netlify.app">
-<meta property="twitter:url" content="https://joseverdev.netlify.app/">
-<meta name="twitter:title" content="Joseverdev Portfolio">
-<meta name="twitter:description" content="Portfolio de desarrollador de joseverdev">
-<meta name="twitter:image" content="https://joseverdev.netlify.app/web.jpg">
-
-<!-- Meta Tags Generated via https://www.opengraph.xyz -->
-
-  <!-- Primary Meta Tags -->
-  <!-- <title>Joseverdev portfolio</title>
-  <meta name="title" content="joseverdev portfolio" />
-  <meta name="description" content="Portfolio de desarrollador de joseverdev" /> -->
-
-
-
-
-  <!-- facebook -->
-  <!-- <meta property="og:title" content="Joseverdev Portfolio" />
-  <meta property="og:type" content="article" />
-	<meta property="og:image" content="https://joseverdev.netlify.app/web.png" />
-  <meta property="og:url" content="https://joseverdev.netlify.app/" />
-  <meta
-    property="og:description"
-    content="Portfolio de desarrollador de joseverdev"
-  /> -->
-
-	<!-- Twitter -->
-	<!-- <meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content="Joseverdev Portfolio" />
-	<meta name="twitter:description" content="Portfolio de desarrollador de joseverdev" />
-	<meta name="twitter:image" content="https://joseverdev.netlify.app/web-tc.png" />
-	<meta name="twitter:site" content="@joseverdev" />
-<meta name="twitter:creator" content="@joseverdev" /> -->
-
+  <!-- Google Analytics (solo en producción) -->
+  {
+    isProd && (
+      <>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVHPS5WXQP" />
+        <script is:inline>
+          window.dataLayer = window.dataLayer || [];
+          function gtag() { dataLayer.push(arguments); }
+          gtag('js', new Date());
+          gtag('config', 'G-ZVHPS5WXQP');
+        </script>
+      </>
+    )
+  }
 </head>

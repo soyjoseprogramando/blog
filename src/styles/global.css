@@ -197,6 +197,7 @@ a {
 }
 main {
   margin: auto;
+  width: 100%;
   min-width: 300px;
   max-width: 1080px;
 }
