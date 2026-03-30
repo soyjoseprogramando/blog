@@ -256,3 +256,19 @@ pre {
     padding: 4rem;
   }
 }
+
+/* Add bottom padding on mobile for bottom nav */
+@media screen and (max-width: 767px) {
+  body {
+    padding-bottom: 3.5rem;
+  }
+
+  /* Adjust top padding for mobile header */
+  .blog {
+    padding-top: 5.5rem;
+  }
+
+  .title-2 {
+    padding-top: 5rem;
+  }
+}
