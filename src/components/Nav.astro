@@ -96,7 +96,10 @@ const isItemActive = (itemPath: string) => {
 </nav>
 
 <nav class="bottom-nav" aria-label="Mobile navigation">
-  <a href="/" class={`bottom-nav__link ${currentPath === "/" ? "bottom-nav__link--active" : ""}`}>
+  <a
+    href="/"
+    class={`bottom-nav__link ${currentPath === "/" ? "bottom-nav__link--active" : ""}`}
+  >
     <Home size={20} />
     <span>blog</span>
   </a>
@@ -175,7 +178,7 @@ const isItemActive = (itemPath: string) => {
     height: 4rem;
     top: 0;
     left: 0;
-    right: 0;
+    /* right: 0; */
     width: 100%;
     background-color: var(--background-dark);
     border-bottom: 1px solid #333333;

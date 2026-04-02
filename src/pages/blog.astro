@@ -34,19 +34,20 @@ console.log(posts);
       <section class="posts">
         {
           posts.map((post) => (
-            <article class="post">
-              <div class="post__info">
-                <p>[{post.data.date}]</p>
-                <p>::</p>
-                <p class="post__tag">{post.data.tags[0]}</p>
-              </div>
-              <h2>{post.data.title}</h2>
-            </article>
+            <a href={`/blog/${post.id}`}>
+              <article class="post">
+                <div class="post__info">
+                  <p>[{post.data.date}]</p>
+                  <p>::</p>
+                  <p class="post__tag">{post.data.tags[0]}</p>
+                </div>
+                <h2>{post.data.title}</h2>
+              </article>
+            </a>
           ))
         }
       </section>
     </div>
-    <h2>Cómo crear un servidor SSH en tu máquina local</h2>
   </div>
 </Layout>
 <!-- <h1>SSH con tu</h1> -->

@@ -39,6 +39,12 @@
 body {
   background-color: var(--bg-dark-light);
   font-family: "JetBrains Mono", "Consolas", "Monaco", monospace;
+  scrollbar-gutter: stable;
+  background: var(--bg-dark-light);
+  color: var(--text-white);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .none {
@@ -106,15 +112,7 @@ body {
   margin: 0;
   padding: 0;
   /* TODO: article about this bug */
-  overflow-x: hidden;
-}
-
-body {
-  background: var(--bg-dark-light);
-  color: var(--text-white);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  /* overflow-x: hidden; */
 }
 
 h1 {
@@ -261,6 +259,7 @@ pre {
 @media screen and (max-width: 767px) {
   body {
     padding-bottom: 3.5rem;
+    scrollbar-gutter: stable;
   }
 
   /* Adjust top padding for mobile header */
